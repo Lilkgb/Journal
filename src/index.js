@@ -21,27 +21,34 @@ Journal.prototype.numWords = function(journal) {
 Journal.prototype.numVowels = function(journal) {
   var numCount = 0;
   var otherCount = 0;
+  var spaceCount = 0;
   var vowels = ["a", "e", "i", "o", "u", "A", "E", "I", "O", "U"];
-  var consts = ["b", "c", "d", "f", "g", "h", "j", "k", "l", "m", "n", "p", "q", "r", "s", "t", "v", "x", "z"];
+  // var consts = ["b", "c", "d", "f", "g", "h", "j", "k", "l", "m", "n", "p", "q", "r", "s", "t", "v", "x", "z"];
   for (var i=0; i<journal.length; i++) {
+    if (journal[i] === " ") {
+      spaceCount++;
+    }
     for (var j=0; j<vowels.length; j++) {
       if (journal[i] === vowels[j]) {
         numCount++;
       }
     }
-    for (var c=0; c<consts.length; c++) {
-      if (journal[i] === consts[c]) {
-        otherCount++;
-      }
+    // for (var c=0; c<consts.length; c++) {
+    //   if (journal[i] === consts[c]) {
+    //     otherCount++;
+    //   }
     }
-  }
+  otherCount = journal.length - numCount - spaceCount;
   $(".journalVowels").append("There are " + numCount + " vowels in your body.");
   $(".journalConsts").append("There are " + otherCount + " consonant in your body.");
 }
 
 Journal.prototype.getTeaser = function(journal) {
   var words = journal.split(' ');
-  if (words.length > 8) {
+  if (words.length < 8) {
+    var output = words.join(' ');
+  }
+  else if (words.length > 8) {
     var output = words.splice(0, 8);
     var output = output.join(' ')
   }
